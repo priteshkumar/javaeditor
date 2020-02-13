@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JavaHacks</title>
+    <style type="text/css" >
+    #editor {
+        height:600px;
+        width:60%;
+        margin-bottom:10px;
+    }
+
+    #output{
+        height:200px;
+        width:60%;
+        margin-top:0px;
+        background:black;
+        color: white;
+        white-space:pre-wrap;
+    }
+    .compile {
+         background-color: #4CAF50; /* Green */
+         border: none;
+         color: white;
+         padding: 10px 32px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+             <h3 class="panel-title">JavaEdit</h3>
+        </div>
+        <div class="panel-body">
+            <div id="editor"></div>
+            <button class="compile">Compile & Test</button>
+            <h4><b>Output</b></h4>
+            <div id="output"></div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://pagecdn.io/lib/ace/1.4.8/ace.js" crossorigin="anonymous" integrity="sha256-+svOVB1WmhKhTy7N21gWvtyXn91qF0r52P2hIArRRug=" type="text/javascript"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+    console.log(editor.session.getMode());
+    document.getElementById('editor').style.fontSize='18px';
+    editor.resize(true);
+    editor.scrollToLine(50, true, true, function () {});
+    editor.gotoLine(50, 0, true);
+
+    setTimeout(function (e) {
+    //editor.resize(true);
+        editor.scrollToLine(100, true, true, function () {});
+        editor.gotoLine(100, 0, true);
+    }, 5000);
+
+    editor.setValue("public class AceDemo {public static void main(String[] args){System.out.println(\"hello acejava\");}}");
+    var queryURL = "/javaide/compile/";
+
+    $( ".compile" ).click(function() {
+        script = editor.getValue();
+        $.ajax({
+        url: queryURL,
+        type: "POST",
+        data: script,
+      }).done(function(response) {
+         console.log(response["output"]);
+         var $output = $("#output");
+         $output.text("");
+         $output.text(response["output"]);
+      });
+
+    });
+</script>
+</body>
