@@ -45,10 +45,16 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://pagecdn.io/lib/ace/1.4.8/ace.js" crossorigin="anonymous" integrity="sha256-+svOVB1WmhKhTy7N21gWvtyXn91qF0r52P2hIArRRug=" type="text/javascript"></script>
+<script src="https://pagecdn.io/lib/ace/1.4.8/ext-language_tools.js" crossorigin="anonymous" ></script>
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/java");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
     console.log(editor.session.getMode());
     document.getElementById('editor').style.fontSize='18px';
     editor.resize(true);
