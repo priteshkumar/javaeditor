@@ -21,6 +21,7 @@ def compile(request):
     print("Compilation post api");
     #print(list(request.POST.items()))
     #print(request.body.decode("utf-8"))
+    print(request.body.decode("utf-8"))
     queryURL = "https://api.jdoodle.com/v1/execute/";
     jdoodleparams = {
         "clientId": "897ecf21be30faf3b108e047795e8ee3",
